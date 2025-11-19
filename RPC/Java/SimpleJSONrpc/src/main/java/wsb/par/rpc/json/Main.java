@@ -15,13 +15,15 @@ public class Main {
         JsonRpcHttpClient client = new JsonRpcHttpClient(
                 new URL("http://localhost:5000"));
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         Map<String,String> params = new HashMap<>();
-        params.put("name","Piotr");
-        Map res = client.invoke("hello", params, Map.class);
+        String res = client.invoke("ping", null, String.class);
         System.out.println(res);
-        
-        
+
+        params = new HashMap<>();
+        params.put("name","Piotr");
+        Map resm = client.invoke("hello", params, Map.class);
+        System.out.println(resm);
+
     }
 
 }
