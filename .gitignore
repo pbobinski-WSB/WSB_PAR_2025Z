@@ -26,4 +26,5 @@ replay_pid*
 *.pyc
 
 .venv
+.venv39
 node_modules
