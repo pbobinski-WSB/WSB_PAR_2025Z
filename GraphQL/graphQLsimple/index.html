@@ -23,6 +23,10 @@
 </head>
 <body>
     <h1>GraphQL Client</h1>
+    <label for="endpoint">GraphQL Endpoint URL:</label>
+    <input type="text" id="endpoint" value="http://127.0.0.1:5000/graphql">
+
+    
     <textarea id="query" placeholder="Enter your GraphQL query or mutation here">
 mutation {
     createUser(name: "Bob", email: "bob@example.com") {
@@ -38,11 +42,17 @@ mutation {
     <pre id="response"></pre>
 
     <script>
-        const endpoint = "http://127.0.0.1:5000/graphql";
+        
 
         document.getElementById("sendQuery").addEventListener("click", async () => {
+            const endpoint = document.getElementById("endpoint").value;
             const query = document.getElementById("query").value;
             const responseBox = document.getElementById("response");
+
+            if (!endpoint) {
+                responseBox.textContent = "Error: Please enter an endpoint URL.";
+                return;
+            }
 
             try {
                 const response = await fetch(endpoint, {
