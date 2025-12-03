@@ -1,0 +1,92 @@
+﻿<!--
+ *  Copyright (c) 2021 GraphQL Contributors
+ *  All rights reserved.
+ *
+ *  This source code is licensed under the license found in the
+ *  LICENSE file in the root directory of this source tree.
+-->
+<!doctype html>
+<html lang="en">
+ 
+<head>
+    <title>GraphiQL</title>
+    <style>
+      /* Style pozostają bez zmian */
+      body {
+        height: 100%; margin: 0; width: 100%; overflow: hidden;
+        display: flex; flex-direction: column;
+      }
+      #graphiql { flex-grow: 1; }
+      .api-bar {
+        display: flex; padding: 8px; background-color: #f7f7f7;
+        border-bottom: 1px solid #ddd; gap: 8px;
+      }
+      .api-bar input {
+        flex-grow: 1; padding: 6px; border: 1px solid #ccc; border-radius: 4px;
+      }
+      .api-bar button {
+        padding: 6px 12px; border: 1px solid #007bff; background-color: #007bff;
+        color: white; border-radius: 4px; cursor: pointer;
+      }
+    </style>
+    
+    <!-- Podstawowe zależności React -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- ZAKTUALIZOWANE I SPRAWDZONE LINKI -->
+    
+    <!-- 1. Główna biblioteka GraphiQL (najnowsza stabilna) -->
+    <link rel="stylesheet" href="https://unpkg.com/graphiql@3.1.0/graphiql.min.css" />
+    <script src="https://unpkg.com/graphiql@3.1.0/graphiql.min.js"></script>
+    
+    <!-- 2. Plugin Explorer (najnowsza stabilna) -->
+    <link rel="stylesheet" href="https://unpkg.com/@graphiql/plugin-explorer@1.0.1/dist/style.css" />
+    <script src="https://unpkg.com/@graphiql/plugin-explorer@1.0.1/dist/index.umd.js" crossorigin></script>
+
+  </head>
+
+  <body>
+    <div class="api-bar">
+  <input type="text" id="api-url-input" value="http://127.0.0.1:5000/graphql">
+  <button id="connect-btn">Połącz</button>
+</div>
+    <div id="graphiql">Loading...</div>
+    <script>
+// Pobierz odwołania do elementów HTML
+const apiUrlInput = document.getElementById('api-url-input');
+const connectBtn = document.getElementById('connect-btn');
+
+// Przygotuj stałe elementy, które się nie zmieniają
+const root = ReactDOM.createRoot(document.getElementById('graphiql'));
+const explorerPlugin = GraphiQLPluginExplorer.explorerPlugin();
+
+// Stwórz funkcję, która zrobi to, co Twój skrypt robił do tej pory,
+// ale użyje adresu URL podanego jako argument.
+function connectToApi(apiUrl) {
+  // Tworzysz fetchera DYNAMICZNIE, używając podanego URL-a
+  const fetcher = GraphiQL.createFetcher({
+    url: apiUrl, // <-- TUTAJ UŻYWAMY ZMIENNEJ, A NIE STAŁEJ!
+    headers: { 'X-Example-Header': 'foo' },
+  });
+
+  // Renderujesz komponent z nowo stworzonym fetcherem.
+  // Plugin pozostaje ten sam.
+  root.render(
+    React.createElement(GraphiQL, {
+      fetcher,
+      defaultEditorToolsVisibility: true,
+      plugins: [explorerPlugin],
+    }),
+  );
+}
+
+// Uruchom funkcję po raz pierwszy z wartością z pola input
+connectToApi(apiUrlInput.value);
+
+// Uruchom funkcję ponownie za każdym razem, gdy przycisk jest kliknięty
+connectBtn.addEventListener('click', () => {
+  connectToApi(apiUrlInput.value);
+});    </script>
+  </body>
+</html>
