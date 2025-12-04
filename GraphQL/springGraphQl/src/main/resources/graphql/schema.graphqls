@@ -1,0 +1,18 @@
+# Definicja typu User, odpowiednik klasy User(ObjectType) w Graphene
+type User {
+    name: String
+    email: String
+}
+
+# Definicja zapytań (Queries)
+type Query {
+    # Zapytanie 'users' zwraca listę obiektów User
+    users: [User]
+}
+
+# Definicja mutacji (Mutations)
+type Mutation {
+    # Mutacja 'createUser' przyjmuje name i email jako wymagane argumenty (!)
+    # i zwraca nowo stworzony obiekt User
+    createUser(name: String!, email: String!): User
+}
