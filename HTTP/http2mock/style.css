@@ -1,0 +1,46 @@
+/* Proste, globalne style dla lepszej czytelności */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    color: #212529;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Kontener, który wyśrodkuje treść */
+.container {
+    max-width: 720px;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Styl dla głównego nagłówka */
+h1 {
+    color: #007bff; /* Niebieski kolor dla wyróżnienia */
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Styl dla paragrafu */
+p {
+    font-size: 1.1rem;
+    color: #495057;
+}
+
+/* Prosty styl dla ewentualnych linków */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

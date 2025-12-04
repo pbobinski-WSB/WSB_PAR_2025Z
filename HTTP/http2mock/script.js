@@ -1,0 +1,1 @@
+console.log("Plik script.js został załadowany i wykonany!");
