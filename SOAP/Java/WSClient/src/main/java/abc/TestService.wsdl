@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://demows03.example.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="ITestService" targetNamespace="http://demows03.example.com/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://demows03.example.com/" elementFormDefault="unqualified" targetNamespace="http://demows03.example.com/" version="1.0">
+
+  <xs:element name="add" type="tns:add"/>
+
+  <xs:element name="addResponse" type="tns:addResponse"/>
+
+  <xs:element name="sayHelloWorldFrom" type="tns:sayHelloWorldFrom"/>
+
+  <xs:element name="sayHelloWorldFromResponse" type="tns:sayHelloWorldFromResponse"/>
+
+  <xs:complexType name="add">
+    <xs:sequence>
+      <xs:element name="a" type="xs:int"/>
+      <xs:element name="b" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="addResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sayHelloWorldFrom">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="from" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sayHelloWorldFromResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="add">
+    <wsdl:part element="tns:add" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addResponse">
+    <wsdl:part element="tns:addResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sayHelloWorldFromResponse">
+    <wsdl:part element="tns:sayHelloWorldFromResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sayHelloWorldFrom">
+    <wsdl:part element="tns:sayHelloWorldFrom" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ITestService">
+    <wsdl:operation name="add">
+      <wsdl:input message="tns:add" name="add">
+    </wsdl:input>
+      <wsdl:output message="tns:addResponse" name="addResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sayHelloWorldFrom">
+      <wsdl:input message="tns:sayHelloWorldFrom" name="sayHelloWorldFrom">
+    </wsdl:input>
+      <wsdl:output message="tns:sayHelloWorldFromResponse" name="sayHelloWorldFromResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ITestServiceSoapBinding" type="tns:ITestService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="add">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="add">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sayHelloWorldFrom">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="sayHelloWorldFrom">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="sayHelloWorldFromResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ITestService">
+    <wsdl:port binding="tns:ITestServiceSoapBinding" name="TestServicePort">
+      <soap:address location="http://localhost:8080/demoWS03-1.0-SNAPSHOT/services/TestService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
