@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ZMIANA 1: Dziedziczymy po spring-boot-starter-parent.
+         To jest magia Spring Boota - dostarcza on spójne wersje dla wszystkich bibliotek. -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.0</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>com.example</groupId>
+    <artifactId>demoWS03-springboot</artifactId> <!-- Zmieniona nazwa, żeby się nie myliło -->
+    <version>1.0-SNAPSHOT</version>
+    <name>demoWS03-springboot</name>
+
+    <!-- ZMIANA 2: Zmieniamy packaging z 'war' na 'jar' -->
+    <packaging>jar</packaging>
+
+    <properties>
+        <java.version>17</java.version> <!-- Spring Boot 3 wymaga Javy 17+ -->
+        <cxf.version>4.0.4</cxf.version>
+    </properties>
+
+    <dependencies>
+        <!-- ZMIANA 3: Dodajemy startery Spring Boota.
+             'spring-boot-starter-web' dostarcza wbudowany serwer Tomcat i wszystko do obsługi HTTP. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- ZMIANA 4: Starter CXF dla Spring Boot.
+             To jest kluczowa zależność, która automatycznie konfiguruje CXF w środowisku Spring Boot. -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+
+        <!-- Nie potrzebujemy już zależności 'jakarta.platform', bo startery je dostarczają -->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- ZMIANA 5: Plugin Spring Boota, który tworzy uruchamialny JAR -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
