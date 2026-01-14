@@ -1,0 +1,52 @@
+# Wersja pliku docker-compose
+version: '3.8'
+
+# Definicja naszych usług (kontenerów)
+services:
+
+  # 1. Zookeeper - wymagany przez Kafkę do zarządzania klastrem
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.0
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  # 2. Kafka - nasz broker wiadomości
+  kafka:
+    image: confluentinc/cp-kafka:7.3.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      # Udostępniamy port na zewnątrz, aby móc się połączyć np. narzędziami GUI
+      - "9092:9092"
+    environment:
+      # Łączymy się z Zookeeperem wewnątrz sieci Dockera
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      # Adres, pod którym Kafka jest dostępna dla innych kontenerów w sieci
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      # Automatyczne tworzenie tematów, jeśli nie istnieją
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      # Konfiguracja dla pojedynczego węzła
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    depends_on:
+      - kafka
+      - zookeeper
+    ports:
+      # Wystawiamy interfejs na porcie 8080
+      - "8080:8080"
+    environment:
+      # Adres brokera Kafki wewnątrz sieci Dockera
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka:29092'
+      # Adres Zookeepera wewnątrz sieci Dockera
+      KAFKA_CLUSTERS_0_ZOOKEEPER: 'zookeeper:2181'
+      # Opcjonalne, ale przydatne
+      KAFKA_CLUSTERS_0_NAME: 'Lokalna Kafka'
+      DYNAMIC_CONFIG_ENABLED: 'true'

@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    # Używamy oficjalnego obrazu z wbudowanym panelem zarządzania
+    image: rabbitmq:3.11-management
+    container_name: rabbitmq
+    ports:
+      # Port 5672 to standardowy port protokołu AMQP (dla naszych skryptów)
+      - "5672:5672"
+      # Port 15672 to port dla interfejsu webowego
+      - "15672:15672"
+    environment:
+      # Domyślny użytkownik i hasło
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
